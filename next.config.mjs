@@ -17,7 +17,15 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'images.unsplash.com',
-            }
+            },
+            // Add your Render backend domain
+            ...(process.env.NEXT_PUBLIC_BACKEND_URL
+                ? [{
+                    protocol: 'https',
+                    hostname: new URL(process.env.NEXT_PUBLIC_BACKEND_URL).hostname,
+                    pathname: '/storage/**',
+                }]
+                : []),
         ],
     },
     async headers() {
@@ -55,7 +63,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Content-Security-Policy',
-                        value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: http://127.0.0.1:8000 http://localhost:8000 https://images.unsplash.com; font-src 'self' data:; connect-src 'self' http://127.0.0.1:8000 http://localhost:8000; frame-ancestors 'none';"
+                        value: `default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data: http://127.0.0.1:8000 http://localhost:8000 https://images.unsplash.com ${process.env.NEXT_PUBLIC_BACKEND_URL || ''}; font-src 'self' data:; connect-src 'self' http://127.0.0.1:8000 http://localhost:8000 ${process.env.NEXT_PUBLIC_BACKEND_URL || ''}; frame-ancestors 'none';`
                     }
                 ],
             },
