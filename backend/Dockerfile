@@ -25,19 +25,18 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /app
 
-# Copy composer files first for better caching
-COPY composer.json composer.lock ./
+# Copy all application files
+COPY . .
 
-# Set composer memory limit and install dependencies
+# Set composer environment variables
 ENV COMPOSER_MEMORY_LIMIT=-1
 ENV COMPOSER_ALLOW_SUPERUSER=1
-RUN composer install --no-dev --no-scripts --no-autoloader --no-interaction --prefer-dist
 
-# Copy application files
-COPY . /app
-
-# Generate optimized autoload files
-RUN composer dump-autoload --optimize --no-dev
+# Install dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist || \
+    (echo "Composer install failed, trying with --no-scripts..." && \
+    composer install --no-dev --no-scripts --no-interaction --prefer-dist && \
+    composer dump-autoload --optimize --no-dev)
 
 # Create SQLite database directory
 RUN mkdir -p /app/database && \
