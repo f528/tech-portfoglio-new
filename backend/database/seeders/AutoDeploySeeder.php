@@ -32,12 +32,7 @@ class AutoDeploySeeder extends Seeder
                 'title' => 'Full Stack Developer',
                 'bio' => 'Sono un developer appassionato di tecnologia e innovazione.',
                 'email' => 'tuoemail@example.com',
-                'phone' => '+39 123 456 7890',
-                'location' => 'Italia',
-                'avatar' => null,
-                'github' => 'https://github.com/tuo-username',
-                'linkedin' => 'https://linkedin.com/in/tuo-profilo',
-                'twitter' => 'https://twitter.com/tuo-handle',
+                // Only include fields that exist in the migration
             ]);
             $this->command->info('✅ Profile created');
         }
