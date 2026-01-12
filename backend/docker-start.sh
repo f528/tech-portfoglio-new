@@ -31,6 +31,10 @@ php artisan db:seed --class=AutoDeploySeeder --force || echo "⚠️  Seeder fai
 echo "🔗 Linking storage..."
 php artisan storage:link || true
 
+# Publish Filament assets (CSS/JS)
+echo "🎨 Publishing Filament assets..."
+php artisan filament:assets || true
+
 # Clear and cache config
 echo "⚡ Optimizing..."
 php artisan config:cache
