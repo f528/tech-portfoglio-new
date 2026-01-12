@@ -37,7 +37,7 @@ class ProjectResource extends Resource
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
-                    ->disk('public')
+                    ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('projects')
                     ->image()
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])

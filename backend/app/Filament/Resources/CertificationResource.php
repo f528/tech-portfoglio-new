@@ -36,7 +36,7 @@ class CertificationResource extends Resource
                     ->helperText('React Icon name (e.g., SiLaravel, FaLock)'),
                 Forms\Components\FileUpload::make('image')
                     ->label('Badge Image')
-                    ->disk('public')
+                    ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('certifications')
                     ->image()
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])

@@ -24,7 +24,7 @@ class ProfileResource extends Resource
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('avatar')
-                    ->disk('public')
+                    ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->directory('profile')
                     ->avatar()
                     ->imageEditor()
@@ -48,7 +48,7 @@ class ProfileResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('cv_file')
                     ->label('CV File (PDF)')
-                    ->disk('public')
+                    ->disk(env('FILESYSTEM_DISK', 'public'))
                     ->acceptedFileTypes(['application/pdf'])
                     ->directory('profile')
                     ->columnSpanFull(),
