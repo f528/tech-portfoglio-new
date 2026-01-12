@@ -36,8 +36,12 @@ class CertificationResource extends Resource
                     ->helperText('React Icon name (e.g., SiLaravel, FaLock)'),
                 Forms\Components\FileUpload::make('image')
                     ->label('Badge Image')
+                    ->disk('public')
                     ->directory('certifications')
-                    ->image(),
+                    ->image()
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/gif', 'image/webp'])
+                    ->maxSize(5120)
+                    ->helperText('Max 5MB. Formati: JPG, PNG, GIF, WebP'),
                 Forms\Components\TextInput::make('credential_id')
                     ->label('Credential ID'),
                 Forms\Components\TextInput::make('credential_url')

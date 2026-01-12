@@ -38,9 +38,10 @@ php artisan admin:create || echo "Admin user already exists or command failed"
 echo "🌱 Seeding database..."
 php artisan db:seed --class=AutoDeploySeeder --force || echo "⚠️  Seeder failed, but continuing anyway..."
 
-# Link storage
+# Link storage (force recreate if exists)
 echo "🔗 Linking storage..."
-php artisan storage:link || true
+php artisan storage:link --force || echo "⚠️  Storage link failed, but continuing..."
+ls -la public/ | grep storage || echo "⚠️  Storage symlink not found in public/"
 
 # Publish Filament assets (CSS/JS)
 echo "🎨 Publishing Filament assets..."
