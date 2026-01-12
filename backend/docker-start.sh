@@ -19,9 +19,9 @@ fi
 echo "🗄️  Running migrations..."
 php artisan migrate --force
 
-# Run seeder to populate database with sample data
+# Run seeder to populate database with sample data (optional - don't fail if it errors)
 echo "🌱 Seeding database..."
-php artisan db:seed --class=AutoDeploySeeder --force
+php artisan db:seed --class=AutoDeploySeeder --force || echo "⚠️  Seeder failed, but continuing anyway..."
 
 # Link storage
 echo "🔗 Linking storage..."
