@@ -4,11 +4,24 @@ export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localh
 
 export async function fetchPortfolioData() {
     try {
-        const res = await fetch(`${API_URL}/portfolio`, { cache: 'no-store' }); // Ensure fresh data
-        if (!res.ok) throw new Error('Failed to fetch data');
+        const res = await fetch(`${API_URL}/portfolio`, {
+            next: { revalidate: 60 } // Revalidate every 60 seconds
+        });
+
+        if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
         return await res.json();
     } catch (error) {
-        console.error("API Fetch Error:", error);
-        return null;
+        console.error('API Fetch Error:', error);
+        return {
+            profile: null,
+            skills: [],
+            projects: [],
+            certifications: [],
+            timeline: [],
+            stats: []
+        };
     }
 }
