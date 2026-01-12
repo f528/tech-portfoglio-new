@@ -19,6 +19,9 @@ import Timeline from "@/components/dashboard/Timeline";
 import Container from "@/components/ui/Container";
 import DazzlingTechStack from "@/components/sections/DazzlingTechStack";
 
+// Force ISR with 60 second revalidation
+export const revalidate = 60;
+
 export default async function Home() {
   const data = await fetchPortfolioData();
 
