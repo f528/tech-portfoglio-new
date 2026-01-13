@@ -41,7 +41,21 @@ php artisan db:seed --class=AutoDeploySeeder --force || echo "⚠️  Seeder fai
 # Link storage (force recreate if exists)
 echo "🔗 Linking storage..."
 php artisan storage:link --force || echo "⚠️  Storage link failed, but continuing..."
+
+# Verify storage link and create upload directories
+echo "📁 Verifying storage setup..."
 ls -la public/ | grep storage || echo "⚠️  Storage symlink not found in public/"
+
+# Create storage subdirectories for uploads
+mkdir -p storage/app/public/profile
+mkdir -p storage/app/public/projects
+mkdir -p storage/app/public/certifications
+
+# Set proper permissions
+chmod -R 775 storage/app/public
+chown -R www-data:www-data storage/app/public || true
+
+echo "✅ Storage directories ready"
 
 # Publish Filament assets (CSS/JS)
 echo "🎨 Publishing Filament assets..."
